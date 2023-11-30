@@ -1,0 +1,45 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+header {
+  background-color: #4682B4;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.about-me,
+.skills,
+.projects {
+  margin: 20px;
+}
+
+.avatar {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border: 2px solid #2f4f4f; /* 边框颜色可以根据需要修改 */
+  border-radius: 50%;
+}
+
+.projects .project {
+  margin-bottom: 15px;
+}
+
+footer {
+  background-color: #4682B4;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
