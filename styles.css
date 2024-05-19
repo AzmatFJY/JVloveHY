@@ -1,45 +1,156 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
+  background: #ffc0cb;
   padding: 0;
-  background-color: #f4f4f4;
-}
-
-header {
-  background-color: #4682B4;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-}
-
-header h1 {
   margin: 0;
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-
-.about-me,
-.skills,
-.projects {
-  margin: 20px;
+p, #newMessage {
+  color: #666;
+  position: relative;
+  z-index: 1;
+  transition: all 1.5s ease-in-out;
+  font-size: 0.8em;
 }
-
-.avatar {
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-  border: 2px solid #2f4f4f; /* 边框颜色可以根据需要修改 */
-  border-radius: 50%;
-}
-
-.projects .project {
-  margin-bottom: 15px;
-}
-
-footer {
-  background-color: #4682B4;
-  color: #fff;
+#newMessage {
+  opacity: 0;
+  font-size: 2em;
+  display: none;
+  justify-content: center;
+  /* Flexbox 居中对齐 */
+  align-items: center;
+  /* Flexbox 居中对齐 */
+  height: 100%;
+  /* 占满父容器高度 */
   text-align: center;
-  padding: 10px;
+  /* 文本居中对齐 */
+}
+button {
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+button:hover {
+  background-color: #fff3f5;
+  transform: translateY(-2px);
+}
+button:active {
+  transform: translateY(1px);
+}
+.paper {
+  width: 25em;
+  height: 15em;
+  position: absolute;
+  display: flex;
+  /* 使用 Flexbox 布局 */
+  flex-direction: column;
+  /* 垂直布局 */
+  top: 2em;
+  left: 2.5em;
+  background: #fff;
+  transition: all 1.5s ease-in-out;
+  z-index: 1;
+  text-align: center;
+  padding: 1em;
+  box-sizing: border-box;
+}
+.back {
+  display: block;
+  position: relative;
+  background: #bbb;
+  top: 0;
+  width: 30em;
+  height: 17em;
+  transition: all 1.5s ease-in-out;
+  box-shadow: 0 0 1em rgba(255, 39, 77, 0.15);
+  z-index: 0;
+}
+.container {
+  margin: 0 auto;
+  padding: 10em 1em 1em 1em;
+  width: 30em;
+  height: 20em;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  z-index: 0;
+  transition: all 1.5s ease-in-out;
+}
+.container .cover {
+  position: absolute;
+  top: 0em;
+  left: 50%;
+  height: 1em;
+  display: block;
+  transform: translate(-50%, 0%) scaleY(1);
+  transform-origin: 0% 50%;
+  margin: 0 auto;
+  border: 15em solid transparent;
+  border-top: 10em solid white;
+  transition: z-index 1.5s ease-in-out, transform 1.5s ease-in-out, border-top 1.5s ease-in-out;
+  transition-delay: 1.5s;
+  z-index: 30;
+}
+.container.open .back {
+  top: 10em;
+  z-index: 0;
+}
+.container.open .back .paper {
+  top: -15em;
+  z-index: 45;
+  height: 30em;
+  transition: z-index 1.5s ease-in-out, top 1.5s ease-in-out, height 1.5s ease-in-out;
+  transition-delay: 1.5s;
+}
+.container.open .cover {
+  border-top: 10em solid #eee;
+  transform: translate(-50%, -100%) scaleY(-1);
+  z-index: 0;
+  transition-delay: 0s;
+}
+.container .bottom {
+  width: 0;
+  margin: 0 auto;
+  position: relative;
+  top: 0em;
+  display: block;
+  border-left: 15em solid #eee;
+  border-right: 15em solid #eee;
+  border-bottom: 7em solid #eee;
+  border-top: 10em solid transparent;
+  transition: 1.5s ease-in-out;
+  z-index: 100;
+}
+.music-icon {
   position: fixed;
-  bottom: 0;
-  width: 100%;
+  bottom: 20px;
+  right: 20px;
+  padding: 0.5em 1em;
+  background-color: #fff;
+  color: #666;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+  font-size: 1em;
+  font-weight: bold;
+}
+.music-icon:hover {
+  background-color: #fff3f5;
+  transform: translateY(-2px);
+}
+.music-icon.playing {
+  transform: scale(1.2);
 }

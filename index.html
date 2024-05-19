@@ -3,42 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fuchiangyu's Personal Website</title>
+    <title>JY love HY</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="container" id="envelope">
+    <div class="back">
+        <div class="paper">
 
-    <header>
-        <h1>FuChiangyu's Webside</h1>
-        <p>Welcome!</p>
-    </header>
+          <p>to lovely Haoyuan <br>
+           When I first met you, I thought you were cute and steady. As we got to know each other better, I started liking you more and more. Being with you made me truly understand my own heart, and I realized I have many shortcomings. But you, like a shining star, illuminated my path, giving me the motivation to change. I know I've made many mistakes in the past, but being with you and feeling happy is the most important signal. On this special day, I want to express my feelings to you: I love you so much.</p>
 
-    <section class="about-me">
-        <h2>About Me</h2>
-        <img src="./imgs/avatar.jpeg" alt="avatar" class="avatar" />
-    </section>
+          <button id="fadeButton">Hey Sweety</button>
+          <div id="newMessage" style="display: none;"><p>I <span style="color: red;">❤</span> YOU</p>
+            <p>CHIANGYU <span style="color: red;">❤</span> HAOYUAN</p>
+       </div>  </div>
+        <div class="cover"></div>
+        <div class="bottom"></div>
+    </div>
+</div>
 
-    <section class="skills">
-        <h2>Hobbies</h2>
-        <ul>
-            <li>Sleep😪💤</li>
-            <li>Languages🌏</li>
-            <li>LGBT🌈</li>
-            <li>Raining☔</li>
-            <!-- Add more skills as needed -->
-        </ul>
-    </section>
+<!-- 音频元素 -->
+<audio id="backgroundMusic" src="./music/mmxhn.mp3" loop autoplay></audio>
 
-    <section class="projects">
-        <h2>My Cousin</h2>
-        <p>Who really needs a <strong>boyfriend</strong> Maybe?</p>
-        <img src="./imgs/mycousin.JPG" alt="my cousin" class="avatar" />
-    </section>
+<!-- 音乐控制图标 -->
+<div id="musicControl" class="music-icon">Pause Music</div>
 
-    <footer>
-        <p>&copy; 2023 Azmat-FJY FuChiangyu. All rights reserved.</p>
-    </footer>
+<script>
+  document.getElementById('envelope').addEventListener('click', function() {
+    const envelope = this;
+    if (envelope.classList.contains('open')) {
+      envelope.classList.remove('open');
 
-    <script src="script.js"></script>
+      // 延迟重置内容，等待信封完全关闭
+      setTimeout(() => {
+        // Reset the paper content to original state
+        const p = document.querySelector('.paper p');
+        const button = document.getElementById('fadeButton');
+        const newMessage = document.getElementById('newMessage');
+
+        p.style.display = 'block';
+        p.style.opacity = '1';
+        button.style.display = 'block';
+        button.style.opacity = '1';
+        newMessage.style.display = 'none';
+        newMessage.style.opacity = '0';
+      }, 3000); // 信封关闭动画持续时间
+    } else {
+      envelope.classList.add('open');
+    }
+  });
+
+  document.getElementById('fadeButton').addEventListener('click', function(event) {
+    event.stopPropagation(); // 阻止事件冒泡以防止信封重新关闭
+    const paper = document.querySelector('.paper');
+    const newMessage = document.getElementById('newMessage');
+    const p = paper.querySelector('p');
+    const button = document.getElementById('fadeButton');
+
+    // Fade out the current content
+    p.style.transition = 'opacity 1s ease-in-out';
+    p.style.opacity = '0';
+    button.style.transition = 'opacity 1s ease-in-out';
+    button.style.opacity = '0';
+
+    setTimeout(() => {
+      p.style.display = 'none';
+      button.style.display = 'none';
+      newMessage.style.display = 'block';
+      newMessage.style.transition = 'opacity 1s ease-in-out';
+      newMessage.style.opacity = '1';
+    }, 1000);
+  });
+
+  // 音乐控制
+  const musicControl = document.getElementById('musicControl');
+  const backgroundMusic = document.getElementById('backgroundMusic');
+  let isPlaying = true;
+
+  musicControl.addEventListener('click', function() {
+    if (isPlaying) {
+      fadeOut(backgroundMusic, 1000);
+      musicControl.innerText = 'Play Music';
+    } else {
+      fadeIn(backgroundMusic, 1000);
+      musicControl.innerText = 'Pause Music';
+    }
+    isPlaying = !isPlaying;
+    musicControl.classList.toggle('playing', isPlaying);
+  });
+
+  function fadeIn(audio, duration) {
+    audio.volume = 0;
+    audio.play();
+    let start = null;
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      let progress = timestamp - start;
+      audio.volume = Math.min(progress / duration, 1);
+      if (progress < duration) {
+        window.requestAnimationFrame(step);
+      }
+    }
+    window.requestAnimationFrame(step);
+  }
+
+  function fadeOut(audio, duration) {
+    let start = null;
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      let progress = timestamp - start;
+      audio.volume = Math.max(1 - progress / duration, 0);
+      if (progress < duration) {
+        window.requestAnimationFrame(step);
+      } else {
+        audio.pause();
+      }
+    }
+    window.requestAnimationFrame(step);
+  }
+</script>
 </body>
 </html>
