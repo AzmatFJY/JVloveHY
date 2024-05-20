@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,44 +10,36 @@
 <div class="container" id="envelope">
     <div class="back">
         <div class="paper">
-
-          <p>to lovely Haoyuan <br>
-           When I first met you, I thought you were cute and steady. As we got to know each other better, I started liking you more and more. Being with you made me truly understand my own heart, and I realized I have many shortcomings. But you, like a shining star, illuminated my path, giving me the motivation to change. I know I've made many mistakes in the past, but being with you and feeling happy is the most important signal. On this special day, I want to express my feelings to you: I love you so much.</p>
-
-          <button id="fadeButton">Hey Sweety</button>
-          <div id="newMessage" style="display: none;"><p>I <span style="color: red;">❤</span> YOU</p>
-            <p>CHIANGYU <span style="color: red;">❤</span> HAOYUAN</p>
-       </div>  </div>
+            <p>to lovely Haoyuan <br>
+               When I first met you, I thought you were cute and steady. As we got to know each other better, I started liking you more and more. Being with you made me truly understand my own heart, and I realized I have many shortcomings. But you, like a shining star, illuminated my path, giving me the motivation to change. I know I've made many mistakes in the past, but being with you and feeling happy is the most important signal. On this special day, I want to express my feelings to you: I love you so much.</p>
+            <button id="fadeButton">Hey Sweety</button>
+            <div id="newMessage" style="display: none;">
+                <p>I <span style="color: red;">❤</span> YOU</p>
+                <p>CHIANGYU <span style="color: red;">❤</span> HAOYUAN</p>
+            </div>
+        </div>
         <div class="cover"></div>
         <div class="bottom"></div>
     </div>
 </div>
 
-<!-- 音频元素 -->
-<audio id="backgroundMusic" src="./music/mmxhn.mp3" loop autoplay></audio>
+<!-- 使用在线音乐链接 -->
+<audio id="backgroundMusic" src="./music/mmxhn.mp3" loop></audio>
 
 <!-- 音乐控制图标 -->
-<div id="musicControl" class="music-icon">Pause Music</div>
+<div id="musicControl" class="music-icon">Mute Music</div>
 
 <script>
   document.getElementById('envelope').addEventListener('click', function() {
     const envelope = this;
+    const backgroundMusic = document.getElementById('backgroundMusic');
+
     if (envelope.classList.contains('open')) {
       envelope.classList.remove('open');
 
       // 延迟重置内容，等待信封完全关闭
       setTimeout(() => {
-        // Reset the paper content to original state
-        const p = document.querySelector('.paper p');
-        const button = document.getElementById('fadeButton');
-        const newMessage = document.getElementById('newMessage');
-
-        p.style.display = 'block';
-        p.style.opacity = '1';
-        button.style.display = 'block';
-        button.style.opacity = '1';
-        newMessage.style.display = 'none';
-        newMessage.style.opacity = '0';
+        resetContent();
       }, 3000); // 信封关闭动画持续时间
     } else {
       envelope.classList.add('open');
@@ -56,41 +48,34 @@
 
   document.getElementById('fadeButton').addEventListener('click', function(event) {
     event.stopPropagation(); // 阻止事件冒泡以防止信封重新关闭
-    const paper = document.querySelector('.paper');
-    const newMessage = document.getElementById('newMessage');
-    const p = paper.querySelector('p');
-    const button = document.getElementById('fadeButton');
-
-    // Fade out the current content
-    p.style.transition = 'opacity 1s ease-in-out';
-    p.style.opacity = '0';
-    button.style.transition = 'opacity 1s ease-in-out';
-    button.style.opacity = '0';
-
-    setTimeout(() => {
-      p.style.display = 'none';
-      button.style.display = 'none';
-      newMessage.style.display = 'block';
-      newMessage.style.transition = 'opacity 1s ease-in-out';
-      newMessage.style.opacity = '1';
-    }, 1000);
+    fadeOutContent();
   });
 
-  // 音乐控制
   const musicControl = document.getElementById('musicControl');
   const backgroundMusic = document.getElementById('backgroundMusic');
-  let isPlaying = true;
+  let isMuted = false;
+
+  function startMusicOnFirstInteraction() {
+    // 监听鼠标移动事件
+    document.addEventListener('mousemove', function playMusicOnMouseMove() {
+      fadeIn(backgroundMusic, 2000);
+      document.removeEventListener('mousemove', playMusicOnMouseMove); // 移除事件监听器，确保只触发一次
+    });
+  }
+
+  // 开始监听鼠标移动事件
+  startMusicOnFirstInteraction();
 
   musicControl.addEventListener('click', function() {
-    if (isPlaying) {
+    if (isMuted) {
+      fadeIn(backgroundMusic, 1000);
+      musicControl.innerText = 'Mute Music';
+    } else {
       fadeOut(backgroundMusic, 1000);
       musicControl.innerText = 'Play Music';
-    } else {
-      fadeIn(backgroundMusic, 1000);
-      musicControl.innerText = 'Pause Music';
     }
-    isPlaying = !isPlaying;
-    musicControl.classList.toggle('playing', isPlaying);
+    isMuted = !isMuted;
+    musicControl.classList.toggle('playing', !isMuted);
   });
 
   function fadeIn(audio, duration) {
@@ -121,6 +106,40 @@
       }
     }
     window.requestAnimationFrame(step);
+  }
+
+  function resetContent() {
+    const p = document.querySelector('.paper p');
+    const button = document.getElementById('fadeButton');
+    const newMessage = document.getElementById('newMessage');
+
+    p.style.display = 'block';
+    p.style.opacity = '1';
+    button.style.display = 'block';
+    button.style.opacity = '1';
+    newMessage.style.display = 'none';
+    newMessage.style.opacity = '0';
+  }
+
+  function fadeOutContent() {
+    const paper = document.querySelector('.paper');
+    const newMessage = document.getElementById('newMessage');
+    const p = paper.querySelector('p');
+    const button = document.getElementById('fadeButton');
+
+    // Fade out the current content
+    p.style.transition = 'opacity 1s ease-in-out';
+    p.style.opacity = '0';
+    button.style.transition = 'opacity 1s ease-in-out';
+    button.style.opacity = '0';
+
+    setTimeout(() => {
+      p.style.display = 'none';
+      button.style.display = 'none';
+      newMessage.style.display = 'block';
+      newMessage.style.transition = 'opacity 1s ease-in-out';
+      newMessage.style.opacity = '1';
+    }, 1000);
   }
 </script>
 </body>

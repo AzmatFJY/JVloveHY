@@ -1,5 +1,7 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Roboto");
+
+/* 设置全局样式 */
 body {
   background: #ffc0cb;
   padding: 0;
@@ -10,6 +12,8 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+/* 段落和新消息样式 */
 p, #newMessage {
   color: #666;
   position: relative;
@@ -17,19 +21,18 @@ p, #newMessage {
   transition: all 1.5s ease-in-out;
   font-size: 0.8em;
 }
+
 #newMessage {
   opacity: 0;
   font-size: 2em;
   display: none;
-  justify-content: center;
-  /* Flexbox 居中对齐 */
-  align-items: center;
-  /* Flexbox 居中对齐 */
-  height: 100%;
-  /* 占满父容器高度 */
-  text-align: center;
-  /* 文本居中对齐 */
+  justify-content: center; /* Flexbox 居中对齐 */
+  align-items: center;    /* Flexbox 居中对齐 */
+  height: 100%;           /* 占满父容器高度 */
+  text-align: center;     /* 文本居中对齐 */
 }
+
+/* 按钮样式 */
 button {
   margin-top: 1em;
   padding: 0.5em 1em;
@@ -41,21 +44,23 @@ button {
   transition: background-color 0.3s ease, transform 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 button:hover {
   background-color: #fff3f5;
   transform: translateY(-2px);
 }
+
 button:active {
   transform: translateY(1px);
 }
+
+/* 信纸样式 */
 .paper {
   width: 25em;
   height: 15em;
   position: absolute;
   display: flex;
-  /* 使用 Flexbox 布局 */
   flex-direction: column;
-  /* 垂直布局 */
   top: 2em;
   left: 2.5em;
   background: #fff;
@@ -65,6 +70,8 @@ button:active {
   padding: 1em;
   box-sizing: border-box;
 }
+
+/* 信封背面样式 */
 .back {
   display: block;
   position: relative;
@@ -76,6 +83,8 @@ button:active {
   box-shadow: 0 0 1em rgba(255, 39, 77, 0.15);
   z-index: 0;
 }
+
+/* 容器样式 */
 .container {
   margin: 0 auto;
   padding: 10em 1em 1em 1em;
@@ -87,6 +96,8 @@ button:active {
   z-index: 0;
   transition: all 1.5s ease-in-out;
 }
+
+/* 信封封面样式 */
 .container .cover {
   position: absolute;
   top: 0em;
@@ -102,10 +113,13 @@ button:active {
   transition-delay: 1.5s;
   z-index: 30;
 }
+
+/* 打开信封时的样式 */
 .container.open .back {
   top: 10em;
   z-index: 0;
 }
+
 .container.open .back .paper {
   top: -15em;
   z-index: 45;
@@ -113,12 +127,15 @@ button:active {
   transition: z-index 1.5s ease-in-out, top 1.5s ease-in-out, height 1.5s ease-in-out;
   transition-delay: 1.5s;
 }
+
 .container.open .cover {
   border-top: 10em solid #eee;
   transform: translate(-50%, -100%) scaleY(-1);
   z-index: 0;
   transition-delay: 0s;
 }
+
+/* 信封底部样式 */
 .container .bottom {
   width: 0;
   margin: 0 auto;
@@ -132,6 +149,8 @@ button:active {
   transition: 1.5s ease-in-out;
   z-index: 100;
 }
+
+/* 音乐控制图标样式 */
 .music-icon {
   position: fixed;
   bottom: 20px;
@@ -147,10 +166,12 @@ button:active {
   font-size: 1em;
   font-weight: bold;
 }
+
 .music-icon:hover {
   background-color: #fff3f5;
   transform: translateY(-2px);
 }
+
 .music-icon.playing {
   transform: scale(1.2);
 }
